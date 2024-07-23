@@ -18,12 +18,16 @@ columns_to_use = ['a', 'b', 'd', 'e']  # 適宜変更
 
 
 # インサート文を生成して出力する
-insert_statements = []
-for index, row in df.iterrows():
-    columns = ', '.join(columns_to_use)
-    values = ', '.join([f"'{Util.process_value(col, row[col])}'" for col in columns_to_use])
-    insert_stmt = f"INSERT INTO {table_name} ({columns}) VALUES ({values});"
-    insert_statements.append(insert_stmt)
+with open('insert_statements.sql', 'w') as file:
+    for csv_file_path in csv_file_paths:
+        # CSVファイルからデータを読み込む
+        df = pd.read_csv(csv_file_path)
+        insert_statements = []
+        for index, row in df.iterrows():
+            columns = ', '.join(columns_to_use)
+            values = ', '.join([f"'{Util.process_value(col, row[col])}'" for col in columns_to_use])
+            insert_stmt = f"INSERT INTO {table_name} ({columns}) VALUES ({values});"
+            insert_statements.append(insert_stmt)
 
 # 生成したインサート文をファイルに書き込む
 with open('insert_statements.sql', 'w') as file:
