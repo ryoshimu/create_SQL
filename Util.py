@@ -1,18 +1,20 @@
 import pandas as pd
 
-def process_value(column_name, value):
+def process_value(column_name, value=None, index=None):
     """
     カラム名に基づいて値に対して特定の処理を追加する
     """
     if column_name == 'column1':
         # 例えば、文字列を大文字に変換
         return str(value).upper()
-    elif column_name == 'a':
+    elif column_name == 'assss':
         # 例えば、値に100を足す
         return str(int(value) + 100)
     elif column_name == 'column3':
         # 例えば、日付形式に変換
         return pd.to_datetime(value).strftime('%Y-%m-%d')
+    elif column_name == 'a':
+        return index
     else:
         # その他のカラムはそのまま
         return str(value).replace("'", "''")
